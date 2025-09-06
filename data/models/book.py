@@ -1,14 +1,16 @@
 from dataclasses import dataclass
 from datetime import datetime
+from typing import Optional
+
 from bson import ObjectId
 
 @dataclass
 class Book:
-    book_id: ObjectId | None
-    title: str
-    author_id: ObjectId | None
-    genre: str
-    yearPublished: datetime
+    book_id: Optional[ObjectId | str] = None
+    title: Optional[str] = None
+    author_id: Optional[ObjectId] = None
+    genre: Optional[str] = None
+    yearPublished: Optional[datetime] = None
 
     def to_dict(self):
         data =  {
@@ -24,9 +26,8 @@ class Book:
 
     @classmethod
     def from_dict(cls, data):
-        book_id = data.get('_id')
         return cls(
-            book_id = book_id,
+            book_id = str(data.get('_id')),
             title = data.get('title'),
             author_id = data.get('author_id'),
             genre = data.get('genre'),

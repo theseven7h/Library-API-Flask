@@ -1,12 +1,11 @@
-from datetime import datetime
-
 from flask import jsonify
 
 from controllers.author_controller import author_bp
-from utils.exceptions import AuthorNotFoundException, EmptyUpdateException
+from controllers.book_controller import book_bp
+from controllers.exceptions.exceptions import BookNotFoundException, EmptyUpdateException, AuthorNotFoundException
 from datetime import datetime
 
-@author_bp.errorhandler(AuthorNotFoundException)
+@book_bp.errorhandler(BookNotFoundException)
 def author_not_found(error):
     return jsonify({
         'error': error.message,
@@ -21,3 +20,11 @@ def empty_update(error):
         'status': 400,
         'timestamp': datetime.now().isoformat()
     }), 400
+
+@author_bp.errorhandler(AuthorNotFoundException)
+def author_not_found(error):
+    return jsonify({
+        'error': error.message,
+        'status': 404,
+        'timestamp': datetime.now().isoformat()
+    }), 404

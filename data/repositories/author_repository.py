@@ -22,7 +22,8 @@ class AuthorRepository:
         if not ready_author:
             return None
         self.db.authors.update_one({'_id': ObjectId(author_id)}, {'$set': ready_author})
-        return Author.from_dict(ready_author)
+        updated_author = self.find_by_id(author_id)
+        return updated_author
 
     def __get_update(self, author):
         ready_author = {}
@@ -34,6 +35,3 @@ class AuthorRepository:
 
     def delete_by_id(self, user_id):
         self.db.authors.delete_one({'_id' : ObjectId(user_id)})
-
-    def delete(self, author):
-        self.db.authors.delete_one({'_id': author._id})

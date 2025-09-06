@@ -4,5 +4,5 @@ from typing import Optional
 
 @dataclass
 class AuthorRequest:
-     name: Optional[str]
-     bio: Optional[str]
+     name: Optional[str] = None
+     bio: Optional[str] = None
